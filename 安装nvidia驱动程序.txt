@@ -1,0 +1,104 @@
+centos7安装nvidia驱动后进不了桌面解决方法！
+尝试的命令有以下：
+http://www.voidcn.com/article/p-blbvumxx-bd.html
+https://blog.csdn.net/xueshengke/article/details/78134991
+http://www.softpanorama.org/Xwindows/Troubleshooting/reinstalling_x11_and_gnome_in_rhel.shtml
+http://wap.sciencenet.cn/home.php?mod=space&mobile=1&do=blog&id=1003625&id=1003625 （详细）
+
+find / -name blacklist.conf
+  898  vi /etc/modprobe.d/blacklist.conf
+            blacklist nouveau
+            options nouveau modeset=0
+  901  ls mod | grep nouveau
+  902  reboot
+  903  systemctl set-default graphical.target
+  905  shutdown -r now
+ 
+  909  cat /lib/modprobe.d/dist-blacklist.conf 
+         #blacklist nvidiafb
+         blacklist nouveau 
+         options nouveau modeset=0
+ 
+  916  systemctl set-default multi-user.target 
+  917  systemctl get-default
+  918  reboot
+
+  920  yum groupinstall "GNOME Desktop"
+  921  init 5
+  922  systemctl set-default graphical.target
+  923  systemctl get-default
+  924  init 5
+  925  vim /etc/modprobe.d/nvidia-installer-disable-nouveau.conf
+        blacklist nouveau
+        options nouveau modeset=0
+  926  vim /lib/modprobe.d/nvidia-installer-disable-nouveau.conf
+        blacklist nouveau
+        options nouveau modeset=0
+  927  shutdown -r now
+  928  systemctl status tunned
+  
+  930  systemctl status tuned.service
+  931  vi /etc/sysconfig/selinux 
+  932  rpm -q kernel-tools
+  933  rpm -q tuned
+  934  service tunned start
+  935  service tunned status
+  936  /bin/systemctl status tunned.service
+  937  systemctl status tuned.service
+  
+  939  /usr/sbin/tuned -l -P
+  940  yum install tuned
+  941  reboot
+  942  systemctl status tuned
+  943  vi /etc/sysconfig/selinux 
+  944  shutdown -r now
+  945  systemctl start tuned.service
+  946  systemctl status tuned.service
+  947  service tuned start
+  948  rpm -qa |grep tuned
+  949  systemctl get-default
+  950  vi /lib/modprobe.d/dist-blacklist.conf 
+  951  /usr/sbin/tuned -l -P
+  952  /usr/sbin/tuned 
+  953  cd /usr/sbin/
+  954  ll
+  955  ls
+  956  ll -a
+  957  cat tuned
+  958  vim tuned
+  959  touch tuned.logs
+  960  chmod 777 tuned.logs 
+  961  /usr/sbin/tuned 
+  962  yum install tuned
+  963  yum remove tuned
+  964  yum install tuned* -y
+  965  yum install tuned -y
+  966  service tuned start
+  967  service tuned status
+  968  systemctl status tuned
+  969  cat /etc/selinux/config 
+  970  service tuned start
+  971  cat /etc/modprobe.d/nvidia-installer-disable-nouveau.conf 
+  972  cat /etc/modprobe.d/blacklist.conf 
+  973  cat /lib/modprobe.d/nvidia-installer-disable-nouveau.conf 
+  974  cat /lib/modprobe.d/dist-blacklist.conf 
+  975  vim /lib/modprobe.d/dist-blacklist.conf 
+  976  shutdown -r now
+  977  systemctl status tuned
+  978  vim /etc/sysconfig/selinux 
+  979  ls mod | grep nouveau
+  
+  984  nvidia-smi
+  
+  987  systemctl get-default
+  988  yum listkde*chinese
+  989  yum list kde*chinese
+  990  yum install kde-l10n-Chinese.noarch
+  991  Xorg -configure
+  992  ls mod | grep nouveau
+  993  ll
+  994  chmod +x NVIDIA-Linux-x86_64-390.67.run 
+  995  ll
+  996  ./NVIDIA-Linux-x86_64-390.67.run 
+  997  systemctl set-default graphical.target
+  998  reboot
